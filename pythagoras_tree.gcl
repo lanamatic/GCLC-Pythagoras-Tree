@@ -1,8 +1,7 @@
-area 0 0 800 600         
-dim 800 600
+area 0 0 140 100         
+dim 140 100
 animation_frames 100 60
-ang_picture 0 0 800 600
-ang_scale 1 1  
+ang_picture 0 0 140 100
 ang_drawsystem_a      
   
 number depth 10
@@ -12,42 +11,42 @@ distance show P0 Pm
 
 %sky
 color 5 5 30
-point SkyLB 0 80
-point SkyRT 800 600
+point SkyLB 0 10
+point SkyRT 140 100
 fillrectangle SkyLB SkyRT
 %grass
 color 42 87 57 
 point GrassLB 0 0
-point GrassRT 800 80
+point GrassRT 140 10
 fillrectangle GrassLB GrassRT
 % stars
 color 255 255 200
-linethickness 0.4
+linethickness 0.2
 
 procedure star {x y} {
 ang_origin x y
 ang_draw_parametric_curve t
 { 0 ; t < 6.28318 ; t + 0.03 }
-{ pow(cos(t),5) ; pow(sin(t),5) }
+{ 0.2 * pow(cos(t),5) ; 0.2 *pow(sin(t),5) }
 }
-call star {120 480}
-call star {250 540} 
-call star {400 500} 
-call star {550 540} 
-call star {700 520}
-call star {60 350} 
-call star {40 550}
-call star {720 360 }
+call star {20 80}
+call star {45 90} 
+call star {70 83} 
+call star {95 90} 
+call star {125 85}
+call star {10 60} 
+call star {5 90}
+call star {125 60}
 
 %tree
 procedure pythagoras_tree {A B depth show} {
 if_then_else {depth > 0} {
-linethickness 0.9
+linethickness 0.2
 
 if_then_else {depth > 4}{
-color 123 63 0
+color 92 64 51
 }{
-color 11 102 35
+color 0 51 0
 }
 
 %base squere
@@ -56,10 +55,8 @@ rotate D A 90 B
 
 expression level {10 - depth + 1}
 if_then_else {show >= level}{
-drawsegment A B
-drawsegment B C
-drawsegment C D
-drawsegment A D
+filltriangle A B C
+filltriangle A C D
 }{}
 
 %branch height
@@ -69,13 +66,13 @@ expression h {L * 0.707106}
 %left squre
 rotate Left D 45 C
 distance lenL D Left
-expression sL { h / lenL }
+expression sL {h / lenL}
 towards Lp D Left sL    
 
 %right squere
 rotate Right C -45 D
 distance lenR C Right
-expression sR { h / lenR }
+expression sR {h / lenR}
 towards Rp C Right sR   
 
 expression newdepth {depth - 1}
@@ -83,7 +80,10 @@ call pythagoras_tree {D Lp newdepth show}
 call pythagoras_tree {Rp C newdepth show}
 }{}
 }
-point A 350 80
-point B 450 80
+point A 62 10
+point B 78 10
 call pythagoras_tree {A B depth show}
+
+
+
 
